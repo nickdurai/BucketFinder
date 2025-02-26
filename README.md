@@ -13,3 +13,7 @@ https://www.python.org/
 3. Start your virtual environment. If using powershell, execute `.\.venv\Scripts\Activate.ps1`
 4. Install requirements using `pip install -r .\requirements.txt`
 5. Run the program using `py main.py`
+
+# Side notes
+
+Issue came up with pushing, so initial commit is very ahead

@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2
 
 def detect_objects(video_path):
-    model = YOLO("yolov8n.pt")  # Load YOLO model
+    model = YOLO("yolov8m.pt")  # Load YOLO model
     results = model.predict(video_path, conf=0.25)  # Lower confidence to catch more objects
 
     ball_position = None
@@ -35,6 +35,6 @@ def detect_objects(video_path):
     return ball_position, hoop_position
 
 if __name__ == "__main__":
-    video_path = "data/basketball_game.mp4"
+    video_path = "data/basketball_game_portrait.mp4"
     ball, hoop = detect_objects(video_path)
     print(f"🎯 Final Detection -> Ball: {ball}, Hoop: {hoop}")
