@@ -34,6 +34,6 @@ def detect_objects(video_path):
     return ball_position, hoop_position
 
 if __name__ == "__main__":
-    video_path = "C:/Users/nickd/Videos/Untitled video - Made with Clipchamp.mp4"
+    video_path = "INSERT VIDEO DIRECTORY"
     ball, hoop = detect_objects(video_path)
     print(f"Detected Ball: {ball}, Hoop: {hoop}")

@@ -3,7 +3,7 @@ from tracking import track_ball
 from auto_cut import create_highlights
 
 def main():
-    video_path = "C:/Users/nickd/Videos/Untitled video - Made with Clipchamp.mp4"
+    video_path = "INSERT VIDEO DIRECTORY"
 
     # Step 1: Detect ball & hoop
     ball_position, hoop_position = detect_objects(video_path)
