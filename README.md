@@ -1,6 +1,15 @@
 # BucketFinder
-Program that identifies when a basketball is scored based on the input video
+Program that identifies when a basketball is scored in a hoop based on the input video
 
-# Uses
-I made this program to help me find when baskets are scored in my own clips, as I'm a videographer and usually have to go through many clips to find when scores happen for editing mixtapes/reels
-Can also be used by trainers/basketball players to analyze a player/teams playstyle or game
+# Requirements
+
+Running this code requires Python.
+https://www.python.org/
+
+# Setup instructions
+
+1. Download the repository
+2. Create a new virtual environment using `py -m venv .venv`
+3. Start your virtual environment. If using powershell, execute `.\.venv\Scripts\Activate.ps1`
+4. Install requirements using `pip install -r .\requirements.txt`
+5. Run the program using `py main.py`
