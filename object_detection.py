@@ -3,37 +3,38 @@ import cv2
 
 def detect_objects(video_path):
     model = YOLO("yolov8n.pt")  # Load YOLO model
-    results = model.predict(video_path, conf=0.2)  # Lower confidence for better detection
+    results = model.predict(video_path, conf=0.25)  # Lower confidence to catch more objects
 
     ball_position = None
     hoop_position = None
 
     for result in results:
         for box in result.boxes:
-            cls_id = int(box.cls)  # Class ID
-            label = model.names[cls_id]  # Class label (e.g., "sports ball", "person", etc.)
+            cls_id = int(box.cls)
+            label = model.names[cls_id]  # Get object class label
 
-            print(f"Detected: {label} at {box.xyxy[0]}")  # Debugging
+            # Print detected objects for debugging
+            print(f"🟡 Detected: {label} at {box.xyxy[0]}")
 
-            # **Basketball detection (YOLO class 32: sports ball)**
-            if cls_id == 32:
+            if label == "sports ball":  # Class name instead of ID
+                x1, y1, x2, y2 = map(int, box.xyxy[0])  # Bounding box
+                center_x = (x1 + x2) // 2
+                center_y = (y1 + y2) // 2
+                ball_position = (center_x, center_y)
+
+            elif label in ["goalpost", "basketball hoop"]:  # Try alternative hoop labels
                 x1, y1, x2, y2 = map(int, box.xyxy[0])
-                ball_position = ((x1 + x2) // 2, (y1 + y2) // 2)
+                hoop_position = (center_x, center_y)
 
-            # **Hoop detection (Trying multiple possible classes)**
-            if cls_id in [0, 1, 2, 67]:  # Potential classes for hoop
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
-                hoop_position = ((x1 + x2) // 2, (y1 + y2) // 2)
+    if ball_position is None:
+        print("⚠️ No basketball detected!")
 
-    # **Debugging: Show detections**
-    if not ball_position:
-        print("⚠️ Basketball not detected!")
-    if not hoop_position:
-        print("⚠️ Hoop not detected!")
+    if hoop_position is None:
+        print("⚠️ No hoop detected!")
 
     return ball_position, hoop_position
 
 if __name__ == "__main__":
-    video_path = "INSERT VIDEO DIRECTORY"
+    video_path = "data/basketball_game.mp4"
     ball, hoop = detect_objects(video_path)
-    print(f"Detected Ball: {ball}, Hoop: {hoop}")
+    print(f"🎯 Final Detection -> Ball: {ball}, Hoop: {hoop}")

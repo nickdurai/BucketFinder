@@ -30,6 +30,9 @@ def track_ball(video_path, initial_position, hoop_position):
         # **Store ball position for scoring analysis**
         trajectory[frame_number] = (predicted_x, predicted_y)
 
+        # **Print the ball & hoop's position for debugging**
+        print(f"Frame {frame_number}: Ball at ({predicted_x}, {predicted_y})")
+
         # **Draw tracking visualization**
         cv2.circle(frame, (predicted_x, predicted_y), 10, (0, 255, 0), -1)  # Green ball tracking
         cv2.imshow("Tracking", frame)
