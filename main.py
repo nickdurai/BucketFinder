@@ -4,7 +4,7 @@ from tracking import track_ball
 from auto_cut import create_highlights
 
 def main():
-    input_video = "data/basketball_game.mp4"
+    input_video = "INSERT VIDEO DIRECTORY"
     portrait_video = "data/basketball_game_portrait.mp4"
 
     # Step 1: Ensure video is in portrait mode
