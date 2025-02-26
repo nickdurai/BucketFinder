@@ -1,18 +1,41 @@
 import cv2
+import numpy as np
 
-def extract_frames(video_path, output_folder):
+def auto_rotate_to_portrait(video_path, output_path):
     cap = cv2.VideoCapture(video_path)
-    frame_count = 0
+
+    # Get video properties
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+
+    # If the video is already portrait, keep it as is
+    if height > width:
+        print("✅ Video is already in portrait mode. No rotation needed.")
+        cap.release()
+        return video_path  # Return the same path
+
+    # Create output writer for rotated video
+    out = cv2.VideoWriter(output_path, fourcc, fps, (height, width))  # Swap width & height
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
-        cv2.imwrite(f"{output_folder}/frame_{frame_count}.jpg", frame)
-        frame_count += 1
+
+        # Rotate frame to portrait mode (90° counterclockwise)
+        rotated_frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        out.write(rotated_frame)
 
     cap.release()
-    print(f"Extracted {frame_count} frames.")
+    out.release()
+    print(f"✅ Video rotated to portrait and saved to {output_path}")
+
+    return output_path  # Return the new file path
 
 if __name__ == "__main__":
-    extract_frames("data/basketball_game.mp4", "data/frames")
+    input_video = "data/basketball_game.mp4"
+    output_video = "data/basketball_game_portrait.mp4"
+
+    auto_rotate_to_portrait(input_video, output_video)
